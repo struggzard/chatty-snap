@@ -1,0 +1,50 @@
+name: chatty
+version: "0.12"
+summary: Twitch Chat Client
+description: |
+  Chatty is a Twitch Chat Client for Desktop featuring many Twitch specific features.
+base: core20
+
+grade: stable
+confinement: strict
+
+apps:
+  chatty:
+    extensions:
+      - gnome-3-28
+    command: desktop-launch $SNAP/bin/launcher
+    environment:
+      JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64
+      PATH: $JAVA_HOME/jre/bin:$PATH
+    plugs:
+      - home
+      - network
+
+parts:
+  chatty:
+    plugin: nil
+    override-build: |
+      wget -O $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip https://github.com/chatty/chatty/releases/download/v$SNAPCRAFT_PROJECT_VERSION/Chatty_$SNAPCRAFT_PROJECT_VERSION.zip
+      unzip -o $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip -d $SNAPCRAFT_PART_INSTALL/
+      rm $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip
+    build-packages:
+      - wget
+      - unzip
+    stage-packages:
+      - openjdk-11-jre
+      - ca-certificates
+      - ca-certificates-java
+      - libpulse0
+      - libpulsedsp
+    prime:
+      - -usr/lib/jvm/java-*/lib/security/cacerts
+      - -usr/lib/jvm/java-*/jre/lib/security/cacerts
+  launcher:
+    plugin: dump
+    source: snap/local
+    organize:
+      'launcher': 'bin/'
+      'padsp': 'bin/'
+      'sensible-browser': 'bin/'
+      'usr/lib/*/gvfs/*.so': 'usr/lib'
+      'usr/bin/xprop': 'usr/bin/xprop.disabled'

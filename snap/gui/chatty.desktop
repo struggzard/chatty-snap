@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Chatty
+GenericName=Chatty
+Comment=Twitch Chat Client
+Exec=chatty
+Icon=${SNAP}/meta/gui/chatty.png
+Terminal=false
+Type=Application
+Categories=Utility;
+
