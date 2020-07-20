@@ -3,7 +3,7 @@ version: "0.12"
 summary: Twitch Chat Client
 description: |
   Chatty is a Twitch Chat Client for Desktop featuring many Twitch specific features.
-base: core20
+base: core18
 
 grade: stable
 confinement: strict
@@ -19,6 +19,9 @@ apps:
     plugs:
       - home
       - network
+      - network-bind
+      - network-observe
+      - hostname-control
 
 parts:
   chatty:
@@ -30,15 +33,13 @@ parts:
     build-packages:
       - wget
       - unzip
-    stage-packages:
       - openjdk-11-jre
       - ca-certificates
       - ca-certificates-java
+    stage-packages:
+      - openjdk-11-jre
       - libpulse0
       - libpulsedsp
-    prime:
-      - -usr/lib/jvm/java-*/lib/security/cacerts
-      - -usr/lib/jvm/java-*/jre/lib/security/cacerts
   launcher:
     plugin: dump
     source: snap/local
