@@ -28,7 +28,7 @@ parts:
   chatty:
     plugin: nil
     override-build: |
-      wget -O $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip  https://iputfileshere.s3.eu-central-1.amazonaws.com/Chatty_0.12.zip 
+      wget -O $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip https://github.com/chatty/chatty/releases/download/v$SNAPCRAFT_PROJECT_VERSION/Chatty_$SNAPCRAFT_PROJECT_VERSION.zip
       unzip -o $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip -d $SNAPCRAFT_PART_INSTALL/
       rm $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip
     build-packages:
