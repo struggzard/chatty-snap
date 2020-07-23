@@ -16,18 +16,19 @@ apps:
     environment:
       JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64
       PATH: $JAVA_HOME/jre/bin:$PATH
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
     plugs:
       - home
       - network
-      - network-bind
-      - network-observe
-      - hostname-control
+      - opengl
+      - pulseaudio
+      - alsa
 
 parts:
   chatty:
     plugin: nil
     override-build: |
-      wget -O $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip https://github.com/chatty/chatty/releases/download/v$SNAPCRAFT_PROJECT_VERSION/Chatty_$SNAPCRAFT_PROJECT_VERSION.zip
+      wget -O $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip  https://iputfileshere.s3.eu-central-1.amazonaws.com/Chatty_0.12.zip 
       unzip -o $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip -d $SNAPCRAFT_PART_INSTALL/
       rm $SNAPCRAFT_PART_INSTALL/Chatty.v$SNAPCRAFT_PROJECT_VERSION.zip
     build-packages:
@@ -40,6 +41,12 @@ parts:
       - openjdk-11-jre
       - libpulse0
       - libpulsedsp
+      - libxxf86vm1
+      - libgl1-mesa-dri
+      - libglu1-mesa
+      - libgl1-mesa-glx
+      - libgles2-mesa
+      - x11-xserver-utils
   launcher:
     plugin: dump
     source: snap/local
