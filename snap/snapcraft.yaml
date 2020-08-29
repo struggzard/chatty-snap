@@ -5,8 +5,12 @@ description: |
   Chatty is a Twitch Chat Client for Desktop featuring many Twitch specific features.
 base: core18
 
-grade: stable
+grade: devel
 confinement: strict
+
+layout:
+  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib:
+    bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib
 
 apps:
   chatty:
@@ -17,12 +21,13 @@ apps:
       JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64
       PATH: $JAVA_HOME/jre/bin:$PATH
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
+      ALSA_CONFIG_PATH: "$SNAP/etc/asound.conf"
     plugs:
       - home
       - network
       - opengl
       - pulseaudio
-      - alsa
+      - audio-playback
 
 parts:
   chatty:
@@ -39,6 +44,8 @@ parts:
       - ca-certificates-java
     stage-packages:
       - openjdk-11-jre
+      - libasound2
+      - libasound2-plugins
       - libpulse0
       - libpulsedsp
       - libxxf86vm1
@@ -53,6 +60,7 @@ parts:
     organize:
       'launcher': 'bin/'
       'padsp': 'bin/'
+      'asound.conf': 'etc/'
       'sensible-browser': 'bin/'
       'usr/lib/*/gvfs/*.so': 'usr/lib'
       'usr/bin/xprop': 'usr/bin/xprop.disabled'
