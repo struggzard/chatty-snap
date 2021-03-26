@@ -1,11 +1,11 @@
 name: chatty
-version: "0.12"
+version: "0.14"
 summary: Twitch Chat Client
 description: |
   Chatty is a Twitch Chat Client for Desktop featuring many Twitch specific features.
 base: core18
 
-grade: devel
+grade: stable
 confinement: strict
 
 layout:
